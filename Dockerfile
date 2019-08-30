@@ -5,7 +5,7 @@ ENV VERSION="1.29.2051.18"
 
 # Build deps
 RUN apk --no-cache add --update go git bzr wget py2-pip \ 
-    gcc python python-dev musl-dev linux-headers libffi-dev openssl-dev \
+    gcc bash curl python python-dev musl-dev linux-headers libffi-dev openssl-dev \
     py-setuptools openssl procps ca-certificates openvpn 
     
 RUN pip install --upgrade pip 
@@ -29,6 +29,7 @@ RUN wget https://github.com/pritunl/pritunl/archive/${VERSION}.tar.gz \
 RUN sed -i -e '/^attributes/a prompt\t\t\t= yes' /etc/ssl/openssl.cnf
 RUN sed -i -e '/countryName_max/a countryName_value\t\t= US' /etc/ssl/openssl.cnf
 
+USER root
 ADD rootfs /
 
 EXPOSE 80
